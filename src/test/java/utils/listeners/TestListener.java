@@ -3,19 +3,24 @@ package utils.listeners;
 
 import InsuranceClaimPortal.BaseClasses.TestBase;
 import com.aventstack.extentreports.Status;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.annotations.Test;
 import utils.extentReports.ExtentManager;
-import utils.logs.Log;
+
 
 import java.util.Objects;
 
 import static utils.extentReports.ExtentTestManager.getTest;
 
 public class TestListener extends TestBase implements ITestListener {
+
+    private static Logger Log = LogManager.getLogger(Test.class);
 
     private static String getTestMethodName(ITestResult iTestResult) {
         return iTestResult.getMethod().getConstructorOrMethod().getName();
@@ -41,11 +46,7 @@ public class TestListener extends TestBase implements ITestListener {
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
         Log.info(getTestMethodName(iTestResult) + " test has succeeded.");
-        String successScreenShot =
-                "data:image/png;base64," + ((TakesScreenshot) Objects.requireNonNull(driver)).getScreenshotAs(OutputType.BASE64);
-        //ExtentReports log operation for passed tests.
-        getTest().log(Status.PASS, "Test passed!",
-                getTest().addScreenCaptureFromBase64String(successScreenShot).getModel().getMedia().get(0));
+        getTest().log(Status.PASS, "Test passed!");
     }
 
     @Override

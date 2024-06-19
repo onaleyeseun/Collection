@@ -16,14 +16,12 @@ public class ExtentManager {
         return (dtf.format(now));
     }
     public synchronized static ExtentReports createExtentReports() {
-        ExtentSparkReporter reporter = new ExtentSparkReporter("./Reports/Market Comparison report "+localDate()+".html");
-        reporter.config().setReportName("TAAS: USSD DATA SERVICE REGRESSION REPORT");
+        ExtentSparkReporter reporter = new ExtentSparkReporter("./Reports/Insurance-portal-report"+localDate()+".html");
+        reporter.config().setReportName("Insurance Claim Portal Tests");
         extentReports.attachReporter(reporter);
         reporter.config().setTheme(Theme.DARK);
         extentReports.setSystemInfo("Author", "Olawale Olapetan");
-        extentReports.setSystemInfo("Platform", "Android, Web");
-        extentReports.setSystemInfo("Platform Version", "13.0");
-        extentReports.setSystemInfo("Test Sim Tariff plan", "Youth_koolmax");
+
         return extentReports;
     }
 }

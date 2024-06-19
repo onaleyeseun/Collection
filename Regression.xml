@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Market Comparison REPORT" verbose="2">\
+
+    <listeners>
+        <listener class-name="utils.listeners.TestListener"/>
+        <listener class-name="utils.listeners.AnnotationTransformer"/>
+    </listeners>
+
+    <test name="User portal TCs" parallel="false">
+        <packages>
+            <package name="InsuranceClaimPortal.Tests.UserPortal"/>
+        </packages>
+    </test>
+<!--    <test name="Admin portal TCs" parallel="false">-->
+<!--        <packages>-->
+<!--            <package name="InsuranceClaimPortal.Tests.AdminPortal"/>-->
+<!--        </packages>-->
+<!--    </test>-->
+
+</suite>
