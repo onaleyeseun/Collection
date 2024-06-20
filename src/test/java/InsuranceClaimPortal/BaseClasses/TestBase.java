@@ -13,6 +13,8 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
@@ -54,12 +56,12 @@ public class TestBase {
     @BeforeClass
     public void setup(ITestContext context) {
         url = null;
-//        if(context.getName().contains("User")) {
-//            url = testData.getProperty("userPortal");
-//        } else if (context.getName().contains("Admin")) {
-//            url = testData.getProperty("adminPortal");
-//        }
-        url = testData.getProperty("userPortal");
+        if(context.getName().contains("User")) {
+            url = testData.getProperty("userPortal");
+        } else if (context.getName().contains("Admin")) {
+            url = testData.getProperty("adminPortal");
+        }
+//        url = testData.getProperty("userPortal");
         System.out.println("The current url is " + url);
         browser = testData.getProperty("browser");
         System.out.println("The browser is " + browser);
@@ -87,7 +89,7 @@ public class TestBase {
                 throw new IllegalArgumentException("The browser selected is not configured");
         }
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
         driver.manage().window().maximize();
         getURL(url);
     }
@@ -123,6 +125,17 @@ public class TestBase {
         } catch (AssertionError | NoSuchElementException e) {
             throw new AssertionError(e);
         }
+    }
+    public void validateAttribute(WebElement element, String attribute, boolean value) {
+        try {
+            Assert.assertEquals(Boolean.parseBoolean(element.getAttribute(attribute)), value);
+        }catch (NoSuchElementException e) {
+            throw new NoSuchElementException("The element is not available on the screen");
+        }
+    }
+    public void dynamicWait(WebElement element, int time) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     public void sleep(int seconds) {

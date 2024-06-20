@@ -12,8 +12,16 @@ public class DashboardPage extends PageBase {
 
     @FindBy(xpath = "//p[text()='Insurance Claim Portal']/../*[2]")
     private WebElement pageDesc;
+    @FindBy(xpath = "//a[@href='log_claim']")
+    private WebElement logClaimBtn;
 
     public WebElement getPageDesc(){
         return pageDesc;
+    }
+    public void clickLogClaimBtn() {
+        click(logClaimBtn);
+    }
+    public WebElement getLogClaimBtn() {
+        return logClaimBtn;
     }
 }

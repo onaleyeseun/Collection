@@ -67,7 +67,7 @@ public class LandingPage extends PageBase {
 
     public void clickSignIntBtn() {
         JavascriptExecutor jsExecutor = ((JavascriptExecutor) driver);
-        waitForElement(signInBtn);
+        waitForVisibility(signInBtn);
         jsExecutor.executeScript("arguments[0].click();", signInBtn);
 //        click(signInBtn);
     }
