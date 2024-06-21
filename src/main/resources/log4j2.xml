@@ -29,7 +29,7 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Root level="warn" additivity="false">
+        <Root level="info" additivity="false">
 <!--            <appender-ref ref="fileLogger" />-->
             <appender-ref ref="console"/>
         </Root>

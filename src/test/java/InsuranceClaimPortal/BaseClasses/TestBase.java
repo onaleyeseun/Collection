@@ -14,6 +14,7 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestContext;
@@ -56,12 +57,12 @@ public class TestBase {
     @BeforeClass
     public void setup(ITestContext context) {
         url = null;
-        if(context.getName().contains("User")) {
-            url = testData.getProperty("userPortal");
-        } else if (context.getName().contains("Admin")) {
-            url = testData.getProperty("adminPortal");
-        }
-//        url = testData.getProperty("userPortal");
+//        if(context.getName().contains("User")) {
+//            url = testData.getProperty("userPortal");
+//        } else if (context.getName().contains("Admin")) {
+//            url = testData.getProperty("adminPortal");
+//        }
+        url = testData.getProperty("userPortal");
         System.out.println("The current url is " + url);
         browser = testData.getProperty("browser");
         System.out.println("The browser is " + browser);
@@ -110,11 +111,11 @@ public class TestBase {
     }
     public void scrollToElement(WebElement element) {
         jsExecutor = (JavascriptExecutor) driver;
-        if (browser.equalsIgnoreCase("chrome")) {
-            jsExecutor.executeScript("arguments[0].scrollIntoViewIfNeeded(true);", element);
-        } else {
+//        if (browser.equalsIgnoreCase("chrome")) {
+//            jsExecutor.executeScript("arguments[0].scrollIntoViewIfNeeded(true);", element);
+//        } else {
             jsExecutor.executeScript("arguments[0].scrollIntoView(true);" + "window.scrollBy(0,-100);", element);
-        }
+//        }
     }
     public void validateText(WebElement element, String message) {
         String actualMessage = "";
@@ -140,10 +141,13 @@ public class TestBase {
 
     public void sleep(int seconds) {
         try {
-            Thread.sleep(seconds * 1000);
+            Thread.sleep(seconds * 1000L);
         }catch (InterruptedException e) {
             log.info(e.getCause());
         }
+    }
+    public Select select(WebElement el) {
+        return new Select(el);
     }
 
     @AfterClass

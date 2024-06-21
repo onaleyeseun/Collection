@@ -17,6 +17,12 @@ public class LogClaimPage extends PageBase {
     private WebElement insuranceClaimRadioInput;
     @FindBy(xpath = "//label[@for='customRadio2']")
     private WebElement motorClaimLabel;
+    @FindBy(id = "motorCategory")
+    private WebElement motorClaimSelect;
+    @FindBy(id = "insuranceCategory")
+    private WebElement insuranceClaimSelect;
+    @FindBy(id = "submitBTN")
+    private WebElement proceedBtn;
 
     // Methods
     public void clickMotorClaimRadioInput() {
@@ -38,5 +44,23 @@ public class LogClaimPage extends PageBase {
     }
     public WebElement getMotorClaimLabel() {
         return motorClaimLabel;
+    }
+    public WebElement getMotorClaimSelect() {
+        return motorClaimSelect;
+    }
+    public void clickMotorClaimSelect() {
+        click(motorClaimSelect);
+    }
+    public WebElement getInsuranceClaimSelect() {
+        return insuranceClaimSelect;
+    }
+    public void clickInsuranceClaimSelect() {
+        click(insuranceClaimSelect);
+    }
+    public WebElement getProceedBtn() {
+        return proceedBtn;
+    }
+    public void clickProceedBtn() {
+        click(proceedBtn);
     }
 }

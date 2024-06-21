@@ -34,4 +34,7 @@ public class PageBase {
         waitForVisibility(el);
         el.sendKeys(text);
     }
+    public void setAttribute(WebElement el, String attrName, String attrValue) {
+        jsExecutor.executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", el, attrName, attrValue);
+    }
 }
