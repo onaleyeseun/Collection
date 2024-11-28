@@ -47,16 +47,16 @@ public class SignUpPage extends PageBase {
     @FindBy(xpath = "//button[contains(text(),'Continue')]")
     private WebElement continueButton;
 
-    @FindBy(id = "successMessageId") // Replace with the actual locator
+    @FindBy(id = "successMessageId")
     private WebElement successMessage;
 
-    @FindBy(css = ".Toastify__toast-container") // Locator for the error container
+    @FindBy(css = ".Toastify__toast-container")
     private WebElement errorContainer;
 
-    @FindBy(css = ".text-red-500.text-sm") // Locator for error messages
+    @FindBy(css = ".text-red-500.text-sm")
     private List<WebElement> mandatoryFieldErrors;
 
-    @FindBy(xpath = "//input") // Locator for error messages
+    @FindBy(xpath = "//input")
     private List<WebElement> inputFields;
 
     @FindBy(xpath = "//*[@id='root']/div[2]/div[2]/div[2]/div/form/div[6]/div")
@@ -109,10 +109,6 @@ public class SignUpPage extends PageBase {
 
     public void clickContinueButton() {
         click(continueButton);
-    }
-
-    public boolean isSignUpSuccessful() {
-        return successMessage.isDisplayed();
     }
 
     public List<WebElement> getInputFields() {
@@ -178,11 +174,4 @@ public class SignUpPage extends PageBase {
     }
 
 
-    public String getPlaceholderText(String businessName) {
-        // Locate the error message element using XPath with partial text match
-        WebElement passwordErrorMessage = driver.findElement(By.xpath("//*[@id=\"root\"]/div[2]/div[2]/div[2]/div/form/div[6]/div"));
-
-        // Get the text of the error message and trim it to remove extra spaces
-        return passwordErrorMessage.getText().trim();
-    }
 }

@@ -3,12 +3,14 @@ package Merchant_Collection_Portal.Tests;
 import Merchant_Collection_Portal.BaseClasses.TestBase;
 import Merchant_Collection_Portal.Pages.LoginPage;
 import Merchant_Collection_Portal.Pages.SignUpPage;
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
+
 import org.testng.annotations.Test;
+import utils.helpers.TestDataProvider;
+
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -27,7 +29,7 @@ public class SignUpTest extends TestBase {
 
     @BeforeMethod
     public void beforeEachTest() {
-       driver.get(testData.getProperty("baseURL"));  // Ensure fresh page load before each test
+       driver.get(testData.getProperty("baseURL"));
 
         initializer();
 
@@ -66,9 +68,6 @@ public class SignUpTest extends TestBase {
             System.out.println("Field with name '" + expectedFieldName + "' is present.");
         }
     }
-
-
-
 
 
     @Test(priority = 3, description = "Verify Error Message for Already Existing Account")
@@ -111,24 +110,9 @@ public class SignUpTest extends TestBase {
         }
     }
 
-
-    @DataProvider(name = "passwordValidationData")
-    public Object[][] passwordValidationData() {
-        return new Object[][]{
-                {testData.getProperty("invalidPassword2.password"), testData.getProperty("invalidPassword2.errorMessage")},
-                {testData.getProperty("invalidPassword3.password"), testData.getProperty("invalidPassword3.errorMessage")},
-                {testData.getProperty("invalidPassword4.password"), testData.getProperty("invalidPassword4.errorMessage")},
-                {testData.getProperty("invalidPassword5.password"), testData.getProperty("invalidPassword5.errorMessage")},
-                {testData.getProperty("invalidPassword6.password"), testData.getProperty("invalidPassword6.errorMessage")}
-        };
-    }
-
-
-
-    @Test(priority = 5, description = "Verify password error messages for invalid passwords", dataProvider = "passwordValidationData")
+    @Test(priority = 5, description = "Verify password error messages for invalid passwords", dataProvider = "passwordValidationData", dataProviderClass = TestDataProvider.class)
     public void verifyPasswordErrorMessages(Method method, String password, String expectedErrorMessage) {
         startTest(method.getName(), method.getAnnotation(Test.class).description(), "test");
-
 
         // Print debug info
         System.out.println("Testing with Password: " + password);
@@ -158,8 +142,6 @@ public class SignUpTest extends TestBase {
 
 
     }
-
-
 
 
     @Test(priority = 6, description = "Verify 'Must be at least 8 characters' Password Error")
@@ -248,32 +230,6 @@ public class SignUpTest extends TestBase {
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage,
                 "Email format validation failed! Expected: " + expectedErrorMessage + ", but got: " + actualErrorMessage);
     }
-
-
-//    @Test(priority = 7, description = "Verify placeholder text for all input fields")
-//    public void verifyPlaceholderText(Method method) {
-//        startTest(method.getName(), method.getAnnotation(Test.class).description(), "test");
-//
-//        intializer();
-////        driver.navigate().refresh();
-//
-//        // Navigate to the Sign-Up page
-//         loginPage.clickSignUpButton();
-//
-//
-//        // Retrieve the placeholder text for each field
-//        String businessNamePlaceholder = signUpPage.getPlaceholderText("businessName");
-//        String businessAddressPlaceholder = signUpPage.getPlaceholderText("businessAddress");
-//        String firstNamePlaceholder = signUpPage.getPlaceholderText("firstName");
-//        String lastNamePlaceholder = signUpPage.getPlaceholderText("lastName");
-//
-//        // Assert that the placeholder texts are correct
-//        Assert.assertEquals(businessNamePlaceholder, "Enter Business Name", "Business name placeholder is incorrect");
-//        Assert.assertEquals(businessAddressPlaceholder, "Enter Business Address", "Business address placeholder is incorrect");
-//        Assert.assertEquals(firstNamePlaceholder, "Enter First Name", "First name placeholder is incorrect");
-//        Assert.assertEquals(lastNamePlaceholder, "Enter Last Name", "Last name placeholder is incorrect");
-//    }
-
 
 
 
