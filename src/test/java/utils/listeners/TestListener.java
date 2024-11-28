@@ -1,7 +1,7 @@
 package utils.listeners;
 
 
-import InsuranceClaimPortal.BaseClasses.TestBase;
+import Merchant_Collection_Portal.BaseClasses.TestBase;
 import com.aventstack.extentreports.Status;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,12 +48,36 @@ public class TestListener extends TestBase implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        Log.info("{}test has failed", getTestMethodName(iTestResult));
-        String failedScreenShot =
-                "data:image/png;base64," + ((TakesScreenshot) Objects.requireNonNull(driver)).getScreenshotAs(OutputType.BASE64);
-        getTest().log(Status.FAIL, "Test has failed",
-                getTest().addScreenCaptureFromBase64String(failedScreenShot).getModel().getMedia().get(0));
+        String testName = getTestMethodName(iTestResult);
+        Log.error("{} test has failed.", testName);
+
+        // Capture screenshot for Extent Report
+        String failedScreenShot = "data:image/png;base64," +
+                ((TakesScreenshot) Objects.requireNonNull(driver)).getScreenshotAs(OutputType.BASE64);
+
+        // Log the failure reason if available
+        Throwable throwable = iTestResult.getThrowable();
+        if (throwable != null) {
+            String errorMessage = throwable.getMessage();
+            Log.error("Failure reason: {}", errorMessage);
+
+            // Log the top stack trace element
+            StackTraceElement[] stackTrace = throwable.getStackTrace();
+            if (stackTrace.length > 0) {
+                StackTraceElement topStackTrace = stackTrace[0];
+                Log.error("Failing at: {} (Line {})", topStackTrace.getClassName() + "." + topStackTrace.getMethodName(),
+                        topStackTrace.getLineNumber());
+            }
+        }
+
+        // Add failure details and screenshot to Extent Report
+        getTest().log(Status.FAIL, "Test has failed. See details below.")
+                .log(Status.FAIL, "Failure reason: " + (throwable != null ? throwable.getMessage() : "No exception message"))
+                .addScreenCaptureFromBase64String(failedScreenShot, "Screenshot on Failure");
     }
+
+
+
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {

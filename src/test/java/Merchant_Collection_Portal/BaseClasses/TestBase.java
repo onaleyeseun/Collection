@@ -1,5 +1,7 @@
-package InsuranceClaimPortal.BaseClasses;
+package Merchant_Collection_Portal.BaseClasses;
 
+import Merchant_Collection_Portal.Pages.LoginPage;
+import Merchant_Collection_Portal.Pages.SignUpPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,14 +19,18 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.Properties;
+
+import static utils.extentReports.ExtentTestManager.startTest;
 
 public class TestBase {
 
@@ -38,7 +44,7 @@ public class TestBase {
     public static FirefoxOptions firefoxOptions = new FirefoxOptions();
     public JavascriptExecutor jsExecutor;
     public String browser;
-    public String url;
+    private String url;
 
     public TestBase() {
         loadPropFile();
@@ -55,14 +61,8 @@ public class TestBase {
     }
 
     @BeforeClass
-    public void setup(ITestContext context) {
-        url = null;
-//        if(context.getName().contains("User")) {
-//            url = testData.getProperty("userPortal");
-//        } else if (context.getName().contains("Admin")) {
-//            url = testData.getProperty("adminPortal");
-//        }
-        url = testData.getProperty("userPortal");
+    public void setup() {
+        url = testData.getProperty("baseURL");
         System.out.println("The current url is " + url);
         browser = testData.getProperty("browser");
         System.out.println("The browser is " + browser);
@@ -94,29 +94,25 @@ public class TestBase {
         driver.manage().window().maximize();
         getURL(url);
     }
+
     public void getURL(String url) {
-        if(url == null) {
+        if (url == null) {
             throw new NullPointerException("The url cannot be empty, please make sure you have supplied valid URL");
-        }else{
+        } else {
             driver.get(url);
         }
 
     }
-    public void turnOffImplicitWait() {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+
+    public void manageImplicitWaits(int seconds) {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(seconds));
     }
 
-    public void turnOnImplicitWait() {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
-    }
     public void scrollToElement(WebElement element) {
         jsExecutor = (JavascriptExecutor) driver;
-//        if (browser.equalsIgnoreCase("chrome")) {
-//            jsExecutor.executeScript("arguments[0].scrollIntoViewIfNeeded(true);", element);
-//        } else {
-            jsExecutor.executeScript("arguments[0].scrollIntoView(true);" + "window.scrollBy(0,-100);", element);
-//        }
+        jsExecutor.executeScript("arguments[0].scrollIntoView(true);" + "window.scrollBy(0,-100);", element);
     }
+
     public void validateText(WebElement element, String message) {
         String actualMessage = "";
         try {
@@ -127,13 +123,15 @@ public class TestBase {
             throw new AssertionError(e);
         }
     }
+
     public void validateAttribute(WebElement element, String attribute, boolean value) {
         try {
             Assert.assertEquals(Boolean.parseBoolean(element.getAttribute(attribute)), value);
-        }catch (NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             throw new NoSuchElementException("The element is not available on the screen");
         }
     }
+
     public void dynamicWait(WebElement element, int time) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(time));
         wait.until(ExpectedConditions.visibilityOf(element));
@@ -142,13 +140,17 @@ public class TestBase {
     public void sleep(int seconds) {
         try {
             Thread.sleep(seconds * 1000L);
-        }catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             log.info(e.getCause());
         }
     }
+
     public Select select(WebElement el) {
         return new Select(el);
-    }
+    } // This can be used when working with drop down implemented with select-options html tags
+
+
+
 
     @AfterClass
     public void tearDown() {

@@ -16,11 +16,11 @@ public class ExtentManager {
         return (dtf.format(now));
     }
     public synchronized static ExtentReports createExtentReports() {
-        ExtentSparkReporter reporter = new ExtentSparkReporter("./Reports/Insurance-portal-report"+localDate()+".html");
-        reporter.config().setReportName("Insurance Claim Portal Tests");
+        ExtentSparkReporter reporter = new ExtentSparkReporter("./Reports/Sample_test-report"+localDate()+".html");
+        reporter.config().setReportName("Sample Tests");
         extentReports.attachReporter(reporter);
         reporter.config().setTheme(Theme.DARK);
-        extentReports.setSystemInfo("Author", "Olawale Olapetan");
+        extentReports.setSystemInfo("Author", "Oluwaseun Onaleye");
 
         return extentReports;
     }

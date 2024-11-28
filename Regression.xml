@@ -6,18 +6,10 @@
         <listener class-name="utils.listeners.AnnotationTransformer"/>
     </listeners>
 
-    <test name="User portal TCs" parallel="false">
+    <test name="Sample test" parallel="false">
         <classes>
-            <class name="InsuranceClaimPortal.Tests.UserPortal.LogNewClaim" />
+            <class name="Merchant_Collection_Portal.Tests.SampleTests" />
+            <class name="Merchant_Collection_Portal.Tests.SignUpTest" />
         </classes>
-<!--        <packages>-->
-<!--            <package name="InsuranceClaimPortal.Tests.UserPortal"/>-->
-<!--        </packages>-->
     </test>
-<!--    <test name="Admin portal TCs" parallel="false">-->
-<!--        <packages>-->
-<!--            <package name="InsuranceClaimPortal.Tests.AdminPortal"/>-->
-<!--        </packages>-->
-<!--    </test>-->
-
 </suite>

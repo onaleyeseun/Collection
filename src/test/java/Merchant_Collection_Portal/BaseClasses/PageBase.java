@@ -1,4 +1,4 @@
-package InsuranceClaimPortal.BaseClasses;
+package Merchant_Collection_Portal.BaseClasses;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;

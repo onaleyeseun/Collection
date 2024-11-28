@@ -6,7 +6,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
 
-import static InsuranceClaimPortal.BaseClasses.TestBase.driver;
+import static Merchant_Collection_Portal.BaseClasses.TestBase.driver;
 import static utils.extentReports.ExtentTestManager.getTest;
 
 public class Retry implements IRetryAnalyzer {
